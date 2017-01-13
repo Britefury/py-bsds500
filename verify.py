@@ -2,6 +2,7 @@ import os, argparse
 
 import numpy as np
 from bsds.bsds_dataset import BSDSDataset
+from bsds import evaluate_boundaries
 from skimage.util import img_as_float
 from skimage.io import imread
 
@@ -48,7 +49,7 @@ for sample_index, sample_name in enumerate(SAMPLE_NAMES):
     gt_b = BSDSDataset.load_boundaries(gt_path)
 
     # Evaluate predictions
-    count_r, sum_r, count_p, sum_p, thresholds = BSDSDataset.evaluate_boundaries(
+    count_r, sum_r, count_p, sum_p, thresholds = evaluate_boundaries.evaluate_boundaries(
         pred, gt_b, thresholds=N_THRESHOLDS, apply_thinning=True)
 
     count_r_overall += count_r
