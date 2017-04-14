@@ -214,6 +214,24 @@ class BSDSHEDAugDataset (object):
         return os.path.join(self.root_path, fold, 'aug_{}{}'.format(data_type, scale), '{}_{}'.format(rot, flip),
                             '{}{}'.format(os.path.split(name)[1], ext))
 
+    @classmethod
+    def augment_names(cls, names):
+        """
+        Add augmentation parameters to the supplied list of names. Converts a
+        sequence of names into a sequence of tuples that provide the name along
+        with augmentation parameters. Each name is combined will all possible
+        combinations of augmentation parameters. By default, there are 96
+        possible augmentations, so the resulting list will be 96x the length
+        of `names`.
+
+        The tuples returned can be used as parameters for the `read_image`,
+        `image_shape` and `mean_boundaries` methods.
+
+        :param names: a sequence of names
+        :return: list of `(name, scale_aug, rotate_aug, flip_aug)` tuples
+        """
+        return [(n, s, r, f) for n in names for (s, r, f) in cls.ALL_AUGS]
+
     def read_image(self, name, scale, rot, flip):
         """
         Load the image identified by the sample name and augmentation
