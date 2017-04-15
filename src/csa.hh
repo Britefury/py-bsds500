@@ -15,7 +15,6 @@
 #include <malloc.h>
 #endif
 #include <sys/types.h>
-#include <sys/times.h>
 
 // NOTE: This code has been tested with the following options only:
 #define QUICK_MIN
@@ -428,8 +427,6 @@ void store_results()
 
 int	main(const int* graph)
 {
-unsigned	time;
-
 init(graph);
 /*
 (void) fprintf(stderr,"CSA: |>  n = %u,  m = %u,  sc_f = %lg", n, m, scale_factor);
@@ -448,8 +445,6 @@ min_epsilon = 2.0 / (double) (n + 1);
 #else
 min_epsilon = 1.0 / (double) (n + 1);
 #endif
-
-time = myclock();
 
 #ifdef	USE_P_REFINE
 (void) update_epsilon();
@@ -472,8 +467,6 @@ while (epsilon > min_epsilon)
   refine();
 #endif
   }
-
-time = myclock() - time;
 
  store_results();
 return(0);
@@ -1119,7 +1112,6 @@ WORK_TYPE	old_refine_work_upd;
 WORK_TYPE	old_refine_work_po;
 #endif
 
-refine_time -= myclock();
 refines++;
 /*
 Saturate all negative arcs: Negative arcs are exactly those
@@ -1187,7 +1179,6 @@ if (total_e > 0)
   sp_aug();
 #endif
 
-refine_time += myclock();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1238,18 +1229,6 @@ void st_destroy(stack s)
     free(s);
 }
 
-///////////////////////////////////////////////////////////////////////////
-// timer.c ////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-unsigned	myclock()
-
-{
-struct tms hold;
-
-(void) times(&hold);
-return(hold.tms_utime);
-}
 
 ///////////////////////////////////////////////////////////////////////////
 // update_epsilon.c ///////////////////////////////////////////////////////
@@ -1737,7 +1716,6 @@ double	delta_c, this_cost;
 long	balance, level;
 lr_aptr	a, a_stop;
 
-p_update_time -= myclock();
 p_updates++;
 
 #ifdef	DEBUG
@@ -1848,7 +1826,6 @@ for (w = head_rhs_node; w != tail_rhs_node; w++)
     w->p -= delta_c;
   }
 
-p_update_time += myclock();
 }
 
 #endif
@@ -2018,7 +1995,6 @@ lhs_ptr	save_active[EXCESS_THRESH];	/* Fix this. It should be */
 lhs_ptr	*save_top = save_active,
 	*active_node;
 
-sp_aug_time -= myclock();
 sp_augs++;
 
 #ifdef	DEBUG
@@ -2132,7 +2108,6 @@ for (level = 0; level < num_buckets; level++)
      }
 #endif
 
-sp_aug_time += myclock();
 }
 
 #endif
@@ -2233,7 +2208,6 @@ unsigned	long	level;
 long	k;
 double	delta_c, this_cost;
 
-sp_aug_time -= myclock();
 sp_augs++;
 
 #ifdef	DEBUG
@@ -2350,7 +2324,6 @@ while (total_e > 0)
 #endif
   }
 
-sp_aug_time += myclock();
 }
 
 #endif
@@ -2529,7 +2502,6 @@ long	wk, xk, max_key = 0;
 int	eps_opt = FALSE;
 register	double	w_to_x_cost, p;
 
-p_refine_time -= myclock();
 p_refines++;
 
 while (top_sort() && !eps_opt)
@@ -2572,7 +2544,6 @@ while (top_sort() && !eps_opt)
     }
   }
 
-p_refine_time += myclock();
 return(eps_opt);
 }
 

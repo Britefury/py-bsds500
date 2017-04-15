@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdint.h>
 
 // All random numbers are generated from a single seed.  This is true
 // even when private random streams (seperate from the global
@@ -32,6 +33,10 @@
 // can be replayed.
 
 // If seed==0, then the seed is generated from the system clock.
+
+typedef uint16_t u_int16_t;
+typedef uint32_t u_int32_t;
+typedef uint64_t u_int64_t;
 
 class Random
 {

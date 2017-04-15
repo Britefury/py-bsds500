@@ -61,7 +61,7 @@ class BSDSDataset (object):
         path = os.path.join(self.images_path, name + '.jpg')
         return img_as_float(imread(path))
 
-    def image_shape(self, name, scale, rot, flip):
+    def get_image_shape(self, name):
         """
         Get the shape of the image identified by the sample name (you can
         get the names from the `train_sample_names`, `val_sample_names` and
@@ -251,7 +251,7 @@ class BSDSHEDAugDataset (object):
         path = self._data_path('data', scale, rot, flip, name, '.jpg')
         return img_as_float(imread(path)).astype(np.float32)
 
-    def image_shape(self, name, scale, rot, flip):
+    def get_image_shape(self, name, scale, rot, flip):
         """
         Get the shape of the image identified by the sample name
         and augmentation parameters.
