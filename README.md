@@ -1,7 +1,8 @@
 # Python port of BSDS 500 boundary prediction evaluation suite
 
 Uses quite a lot of code from the original BSDS evaluation suite at
-(https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)[https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/]
+[berkeley.edu/Research/Projects/CS/vision/bsds/](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/)
+
 
 Takes the original C++ source code that provides the `matchPixels` function for Matlab
 and wraps it with Cython to make it available from Python.
