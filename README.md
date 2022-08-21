@@ -15,7 +15,7 @@ Compile the extension module with:
 
 Then run:
 
-`python verify.py <path_to_bsds500_root_directory>`
+`python verify.py <path_to_bsds500_root_directory>`, for Mac users you might have to run `CFLAGS='-stdlib=libc++' python setup.py build_ext --inplace`
 
 You should get output that (almost) matches the text files in the
 `bench/data/test_2` directory within the BSDS package.
